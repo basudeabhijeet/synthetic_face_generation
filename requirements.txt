@@ -9,3 +9,4 @@ GitPython==3.1.44
 requests==2.32.3
 protobuf==4.25.3
 scipy==1.11.4
+gdown
