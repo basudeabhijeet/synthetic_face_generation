@@ -9,7 +9,3 @@ GitPython==3.1.44
 requests==2.32.3
 protobuf==4.25.3
 scipy==1.11.4
-
-# Direct Git repo dependencies (StyleGAN2-ADA)
-dnnlib @ git+https://github.com/NVlabs/stylegan2-ada-pytorch.git
-legacy @ git+https://github.com/NVlabs/stylegan2-ada-pytorch.git
