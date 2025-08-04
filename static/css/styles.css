@@ -1,0 +1,826 @@
+/*
+================================================
+Face GAN Inversion Tool - FINAL Hybrid Stylesheet
+Version: 4.4 (Customize Page Layout)
+================================================
+*/
+
+/* 1. ROOT VARIABLES & THEME SETUP
+------------------------------------------------ */
+:root {
+    --primary-color: #5e72e4;
+    --primary-light: #8392f0;
+    --primary-dark: #324cdd;
+    --secondary-color: #f4f5f7;
+    --accent-color: #11cdef;
+    --success-color: #2dce89;
+    --danger-color: #f5365c;
+    --warning-color: #fb6340;
+
+    --text-dark: #212529;
+    --text-light: #8898aa;
+    --text-white: #ffffff;
+
+    --bg-main: #f6f9fc;
+    --bg-card: #ffffff;
+    --border-color: #e9ecef;
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.02);
+    --shadow-md: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+    
+    --border-radius: 0.5rem;
+    --transition-speed: 0.3s;
+}
+
+/* 2. GLOBAL STYLES & ANIMATIONS
+------------------------------------------------ */
+@keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-dark);
+    background: linear-gradient(-45deg, #f6f9fc, #eef2f9, #f6f9fc, #e6eefa);
+    background-size: 400% 400%;
+    animation: gradient-animation 25s ease infinite;
+    line-height: 1.6;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes textShimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+/* 3. NAVIGATION BAR
+------------------------------------------------ */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 0.5rem 0;
+    transition: box-shadow var(--transition-speed) ease;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.navbar-logo::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-color: var(--primary-color);
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-6h4v-2h-4v2zm-2-4h8v-2H8v2z'/%3E%3C/svg%3E");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+}
+
+.navbar-logo h1 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    letter-spacing: -0.5px;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-light);
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    position: relative;
+    overflow: hidden;
+    transition: color var(--transition-speed) ease;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width var(--transition-speed) ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-color);
+}
+
+.nav-link:hover::before, .nav-link.active::before {
+    width: 80%;
+}
+
+/* 4. LAYOUT & CARDS
+------------------------------------------------ */
+.app-title,
+.section-title {
+    background-image: linear-gradient(
+        65deg,
+        var(--primary-dark) 25%,
+        var(--primary-light) 45%,
+        var(--accent-color) 55%,
+        var(--primary-dark) 75%
+    );
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: 
+        fadeInUp 0.8s ease-out forwards,
+        textShimmer 6s linear 1s infinite;
+}
+
+.app-container {
+    max-width: 1200px;
+    margin: 2.5rem auto;
+    padding: 0 1rem;
+}
+
+.app-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.app-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 0.75rem;
+}
+
+.app-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--border-color);
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(50, 50, 93, 0.1), 0 7px 20px rgba(0, 0, 0, 0.08);
+}
+
+.results-section .section-title {
+    border: none;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+/* 5. FORM ELEMENTS
+------------------------------------------------ */
+.upload-zone {
+    border: 2px dashed var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 3rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    background-color: #fafbff;
+    transition: all var(--transition-speed) ease;
+}
+
+.upload-zone:hover, .upload-zone.highlight {
+    border-color: var(--primary-color);
+    transform: scale(1.02);
+    box-shadow: 0 0 25px rgba(94, 114, 228, 0.1);
+    background-color: var(--bg-card);
+}
+
+.upload-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.upload-description {
+    color: var(--text-light);
+}
+
+.file-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.form-select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--text-light);
+    border-radius: var(--border-radius);
+    background-color: var(--bg-card);
+    color: var(--text-color);
+    font-size: 1rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%238898aa' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+    background-size: 1.5em 1.5em;
+    transition: all var(--transition-speed) ease;
+}
+
+.form-select:focus {
+    border-color: var(--primary-color);
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(94, 114, 228, 0.25);
+}
+
+.form-select-changed {
+    background-color: rgba(94, 114, 228, 0.1) !important;
+    border-color: var(--primary-light) !important;
+}
+
+input[type="range"] {
+    width: 100%;
+    height: 8px;
+    -webkit-appearance: none;
+    background: var(--secondary-color);
+    border-radius: 5px;
+    outline: none;
+    margin: 0.5rem 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: ew-resize;
+    border: 3px solid var(--bg-card);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+/* 6. BUTTONS
+------------------------------------------------ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-speed) ease;
+    box-shadow: var(--shadow-md);
+    color: var(--text-white);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.icon {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+
+.btn, .btn-primary {
+    background: linear-gradient(45deg, var(--primary-light), var(--primary-color));
+}
+
+.btn:hover::after, .btn-primary:hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(100deg, rgba(255,255,255,0) 20%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 80%);
+    animation: shimmer 1.5s infinite;
+}
+
+.btn-secondary {
+    background: var(--secondary-color);
+    color: var(--text-light);
+}
+
+.btn-success {
+    background: var(--success-color);
+    color: var(--text-white);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--text-white);
+    border: 2px solid var(--primary-color);
+    box-shadow: none;
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-icon-only {
+    background: transparent;
+    box-shadow: none;
+    padding: 0.5rem;
+    border-radius: 50%;
+    color: var(--text-light);
+    line-height: 1;
+}
+
+.btn-icon-only:hover {
+    background: var(--secondary-color);
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.btn-icon-only .icon {
+    margin: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+/* 7. PAGE SPECIFIC COMPONENTS & UTILITIES
+------------------------------------------------ */
+.image-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.image-card {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    background: var(--bg-card);
+    box-shadow: var(--shadow-md);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.image-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    background-color: #fdfdff;
+    border-bottom: 1px solid var(--border-color);
+    font-weight: 600;
+}
+
+.image-container {
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: #f0f2f5;
+    flex-grow: 1;
+}
+
+.image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.output-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 0;
+}
+
+.output-actions-grid .btn {
+    width: 100%;
+    justify-content: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.loading {
+    display: none;
+    text-align: center;
+    padding: 2rem;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--secondary-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 1rem auto;
+}
+
+.error {
+    display: none;
+    color: var(--danger-color);
+    background-color: rgba(245, 54, 92, 0.1);
+    border: 1px solid var(--danger-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    text-align: center;
+}
+
+.no-image-message {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-light);
+}
+
+.back-link {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-speed) ease;
+    z-index: 20;
+}
+
+.back-link:hover {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    transform: scale(1.1) rotate(-15deg);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Product Cards (Marketing Page) */
+.product-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    transition: all var(--transition-speed) ease;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    cursor: pointer;
+    text-align: left;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.product-card.active {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 25px rgba(94, 114, 228, 0.2);
+    transform: translateY(-2px);
+}
+
+.product-card-icon {
+    font-size: 1.75rem;
+    color: var(--primary-color);
+    background-color: rgba(94, 114, 228, 0.1); /* Lighter background */
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-speed) ease-out;
+}
+
+.product-card-content h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.product-card-content p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.5;
+}
+
+.product-card:hover .product-card-icon {
+    transform: scale(1.1);
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 10px rgba(94, 114, 228, 0.4);
+}
+
+/* Preset Cards (Filmmaking Page) */
+.preset-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    text-align: center;
+    transition: all var(--transition-speed) ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.preset-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.preset-card.active {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 25px rgba(94, 114, 228, 0.2);
+    transform: translateY(-2px);
+}
+
+.preset-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(94, 114, 228, 0.2);
+}
+
+.preset-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.preset-card p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+}
+
+.presets-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+
+/* Carousel */
+.details-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.image-showcase {
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
+    position: relative;
+}
+
+.text-details {
+    flex: 1.2;
+    min-width: 300px;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-speed) ease;
+    user-select: none;
+    z-index: 10;
+}
+
+.carousel-arrow:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-arrow.left { left: 15px; }
+.carousel-arrow.right { right: 15px; }
+
+.image-label {
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+/* NEW: Styles for Customize Page Layout */
+.controls-row {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.controls-row.row-2-cols {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.controls-row.row-3-cols {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.controls-row .control-group {
+    margin-bottom: 0;
+}
+
+.control-label {
+    gap: 2rem; /* Adds space between name and value */
+}
+
+.control-value {
+    font-weight: 700;
+    color: var(--primary-color); /* Makes value text blue */
+}
+
+#preview {
+    max-width: 250px;
+    margin: 1.5rem auto 0;
+}
+
+#preview img {
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+}
+
+/* NEW: Icon-based Layout for Product Detail Page (Large Text) */
+.details-container .text-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem; /* Space between each detail item */
+}
+
+.details-container .text-details .app-title {
+    font-size: 3.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+}
+
+.detail-icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-top: 0.5rem;
+    width: 24px;
+    text-align: center;
+}
+
+.detail-item p {
+    font-size: 1.35rem;
+    line-height: 1.8;
+    margin: 0;
+}
+
+.detail-item .app-subtitle {
+    font-size: 1.4rem;
+    color: var(--text-light);
+}
+
+/* 8. RESPONSIVE DESIGN
+------------------------------------------------ */
+@media (max-width: 992px) {
+    .presets-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .output-actions-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .image-comparison, .presets-grid, .output-actions-grid, .controls-row {
+        grid-template-columns: 1fr !important; /* Forces all grids to single column */
+    }
+
+    .navbar-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

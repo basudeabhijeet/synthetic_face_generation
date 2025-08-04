@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face GAN Inversion Tool</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <h1>Face GAN Inversion Tool</h1>
+            </div>
+            <div class="navbar-links">
+                <a href="/" class="nav-link active">Generate Face</a>
+                <a href="/marketing" class="nav-link">Marketing</a>
+                <a href="/filmmaking" class="nav-link">Film Making</a>
+                <a href="/customize" class="nav-link">Customize Face</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <div class="app-header">
+            <h1 class="app-title">Face GAN Inversion Tool</h1>
+            <p class="app-subtitle">Transform portrait photos into high-quality synthetic faces</p>
+        </div>
+        
+        <div class="card">
+            <form action="/" method="POST" enctype="multipart/form-data" id="uploadForm">
+                <div class="upload-zone" id="dropZone">
+                    <h2 class="upload-title">Upload a Portrait Photo</h2>
+                    <p class="upload-description">Select or drag a portrait photo to transform it into a synthetic face</p>
+                    
+                    <div class="file-input-wrapper">
+                        <button type="button" class="btn btn-outline">
+                            <span class="btn-icon">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                Choose File
+                            </span>
+                        </button>
+                        <input type="file" name="file" id="fileInput" accept="image/*" class="file-input">
+                    </div>
+                    
+                    <div id="preview"></div>
+                </div>
+                
+                <div class="action-buttons" id="generateBtnContainer" style="display: none;">
+                    <button type="submit" class="btn">
+                        <span class="btn-icon">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                            </svg>
+                            Generate Face
+                        </span>
+                    </button>
+                </div>
+                
+                <div class="loading" id="loadingIndicator">
+                    <p>Processing your image... This may take a few moments</p>
+                    <div class="spinner"></div>
+                </div>
+                
+                <div class="error" id="errorMessage"></div>
+            </form>
+        </div>
+        
+        <div class="card" id="resultsCard" style="display: {% if original_image %}block{% else %}none{% endif %};">
+            <div class="results-section">
+                <h2 class="section-title">Results</h2>
+                
+                {% if original_image and synthetic_image %}
+                <div class="image-comparison">
+                    <div class="image-card">
+                        <div class="image-header">
+                            <span>Original Image (Input)</span>
+                        </div>
+                        <div class="image-container">
+                            <img src="{{ original_image }}" alt="Original uploaded image" id="originalImg">
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <div class="image-header">
+                            <span>Synthetic Face (Output)</span>
+                            <button type="button" id="downloadBtn" class="btn btn-icon-only" title="Download Image">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="image-container">
+                            <img src="{{ synthetic_image }}" alt="Generated synthetic face" id="syntheticImg">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="output-actions-grid">
+                    <a href="/customize" class="btn">
+                        <span class="btn-icon">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            Customize
+                        </span>
+                    </a>
+                    <a href="/filmmaking" class="btn">
+                        <span class="btn-icon">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                            </svg>
+                            Film Making
+                        </span>
+                    </a>
+                    <a href="/marketing" class="btn">
+                        <span class="btn-icon">
+                            <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
+                            Marketing
+                        </span>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <script src="static/js/script.js"></script>
+    <script src="{{ url_for('static', filename='js/nav_handler.js') }}"></script>
+</body>
+</html>

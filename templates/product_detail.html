@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} - Product Detail</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <h1>Face GAN Inversion Tool</h1>
+            </div>
+            <div class="navbar-links">
+                <a href="/" class="nav-link">Generate Face</a>
+                <a href="/marketing" class="nav-link active">Marketing</a>
+                <a href="/filmmaking" class="nav-link">Film Making</a>
+                <a href="/customize" class="nav-link">Customize Face</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <div class="card">
+            <a href="/marketing" class="back-link" title="Back to Products">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="details-container">
+
+                <div class="image-showcase" 
+                     id="imageShowcase" data-images='{{ image_urls|tojson|safe }}' 
+                     data-labels='{{ labels|tojson|safe }}'>
+                    
+                    <h3 class="section-title" style="text-align: center; border: none; margin-bottom: 1rem;">Preview</h3>
+                    
+                    <div class="image-container" style="height: auto; padding: 0;">
+                        <img id="carouselImage" src="{{ image_urls[0] }}" alt="Product effect showcase" style="aspect-ratio: 1/1;">
+                    </div>
+                    
+                    <button class="carousel-arrow left" id="prevBtn">‹</button>
+                    <button class="carousel-arrow right" id="nextBtn">›</button>
+
+                    <p class="image-label" id="imageLabel"></p>
+                </div>
+
+                <div class="text-details">
+                    <h1 class="app-title">{{ product.name }}</h1>
+                    
+                    <div class="detail-item">
+                        <i class="fas fa-info-circle detail-icon"></i>
+                        <p class="app-subtitle" style="text-align: left; margin: 0; max-width: none;">{{ product.description }}</p>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px solid var(--border-color);">
+
+                    <div class="detail-item">
+                        <i class="fas fa-briefcase detail-icon"></i>
+                        <p><strong>Use Case:</strong> {{ product.use_case }}</p>
+                    </div>
+
+                    <div class="detail-item">
+                        <i class="fas fa-tags detail-icon"></i>
+                        <p><strong>Category:</strong> <span class="pill">{{ product.category }}</span></p>
+                    </div>
+
+                    <div style="margin-top: auto; text-align: center; padding-top: 1rem;">
+                        <button id="downloadBtn" class="btn btn-success">
+                            <span class="btn-icon">
+                                <svg class="icon" xmlns="http://www.w.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 18px; height: 18px;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                                Download Current Image
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/product_detail.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/nav_handler.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Showcase</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <h1>Face GAN Inversion Tool</h1>
+            </div>
+            <div class="navbar-links">
+                <a href="/" class="nav-link">Generate Face</a>
+                <a href="/marketing" class="nav-link active">Marketing</a>
+                <a href="/filmmaking" class="nav-link">Film Making</a>
+                <a href="/customize" class="nav-link">Customize Face</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <div class="app-header">
+            <h1 class="app-title">Product Showcase</h1>
+            <p class="app-subtitle">Select a product to see its transformative effect.</p>
+        </div>
+
+        <h2 class="section-title">Featured Products</h2>
+        <div class="controls-grid">
+            {% for product in featured_products %}
+            <a href="{{ url_for('product_detail', product_id=product.id) }}" style="text-decoration: none; color: inherit;">
+                <div class="card product-card">
+                    <div class="product-card-icon">
+                        <i class="{{ product.icon }}"></i>
+                    </div>
+                    <div class="product-card-content">
+                        <h3 style="margin: 0;">{{ product.name }}</h3>
+                        <p>{{ product.description }}</p>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <div class="action-buttons">
+            <button id="showProductsBtn" class="btn btn-secondary">Show Available Products</button>
+        </div>
+
+        <div id="otherProductsPanel" style="display: none; margin-top: 2rem;">
+            <h2 class="section-title">All Available Products</h2>
+            <div class="controls-grid">
+                {% for product in other_products %}
+                <a href="{{ url_for('product_detail', product_id=product.id) }}" style="text-decoration: none; color: inherit;">
+                    <div class="card product-card">
+                        <div class="product-card-icon">
+                            <i class="{{ product.icon }}"></i>
+                        </div>
+                        <div class="product-card-content">
+                            <h3 style="margin: 0;">{{ product.name }}</h3>
+                            <p>{{ product.description }}</p>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/marketing.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/nav_handler.js') }}"></script>
+</body>
+</html>

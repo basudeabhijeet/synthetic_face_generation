@@ -1,0 +1,14 @@
+{
+  "gender": { "component": 0, "direction": 1, "strength": 2.0 },
+  "age": { "component": 1, "direction": 1, "strength": 2.0 },
+  "smile": { "component": 3, "direction": 1, "strength": 2.0 },
+  "pose": { "component": 2, "direction": 1, "strength": 2.45 },
+  "lighting": { "component": 26, "direction": 1, "strength": 2.5 },
+  "hair_color": { "component": 5, "direction": 1, "strength": 1.6 },
+  "hair_length": { "component": 6, "direction": 1, "strength": 2.5 },
+  "expression": { "component": 7, "direction": 1, "strength": 2.0 },
+  "eye_color": { "component": 9, "direction": 1, "strength": 2.4 },
+  "eye_state": { "component": 12, "direction": 1, "strength": 2.2 },
+  "serious_mood": { "component": 18, "direction": 1, "strength": 3.0 },
+  "maturity": { "component": 34, "direction": 1, "strength": 3.5 }
+}

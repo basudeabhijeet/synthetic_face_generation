@@ -1,0 +1,67 @@
+{
+  "eye_color_lenses": {
+    "id": "eye_color_lenses",
+    "name": "AR Lens Try-On",
+    "description": "Allow customers to virtually try on different shades of colored contact lenses.",
+    "use_case": "An essential tool for marketing colored contact lenses from brands like Bausch & Lomb by displaying synthetic eyes in various shades like hazel, blue, and green.",
+    "category": "Colored Contact Lenses / Eyewear",
+    "icon": "fas fa-eye",
+    "variations": [
+      { "label": "Input Image", "edits": "input" },
+      { "label": "Green Lenses", "edits": { "eye_color": -7.5, "lighting": 7.0, "truncation": 0.5, "noise_strength": 1.0 } },
+      { "label": "Blue Lenses", "edits": { "eye_color": -10.0, "lighting": 7.0, "truncation": 0.5, "noise_strength": 1.0 } }
+    ]
+  },
+  "beard_grooming": {
+    "id": "beard_grooming",
+    "name": "Virtual Beard Stylist",
+    "description": "Simulate various beard lengths to showcase the results of grooming serums and oils.",
+    "use_case": "Allows brands like Beardo or Ustraa to vary beard length on a synthetic face to simulate grooming progress or different styles, showing the product's effectiveness over time.",
+    "category": "Beard Grooming Products / Men's Grooming",
+    "icon": "fas fa-cut",
+    "variations": [
+      { "label": "Input Image", "edits": "input" },
+      { "label": "Styled Stubble", "edits": { "hair_length": 6.5, "truncation": 0.5, "noise_strength": 1.0 } },
+      { "label": "Full Beard", "edits": { "hair_length": 10.0, "truncation": 0.5, "noise_strength": 1.0 } }
+    ]
+  },
+  "anti_aging": {
+    "id": "anti_aging",
+    "name": "Age-Defy Skincare Simulator",
+    "description": "Demonstrate the rejuvenating effects of skincare products by synthetically reversing age.",
+    "use_case": "For the Skincare sector, this allows brands like Pond’s Age Miracle or Olay to simulate younger-looking skin, providing a powerful before-and-after visual for ad campaigns.",
+    "category": "Anti-aging & Skincare / Cosmetics",
+    "icon": "fas fa-history",
+    "variations": [
+      { "label": "Input Image", "edits": "input" },
+      { "label": "After 4 Weeks of Use", "edits": { "maturity": -6.5, "truncation": 0.5, "noise_strength": 1.0 } },
+      { "label": "After 8 Weeks of Use", "edits": { "maturity": -10.0, "truncation": 0.5, "noise_strength": 1.0 } }
+    ]
+  },
+  "facial_glow": {
+    "id": "facial_glow",
+    "name": "Radiance & Glow Simulator",
+    "description": "Simulate a radiant glow to showcase the effect of brightening moisturizers.",
+    "use_case": "For beauty brands like Olay or Fair & Lovely, this can show a before/after glow to market the effectiveness of their facial creams and brightening products.",
+    "category": "Skincare & Cosmetics / Beauty",
+    "icon": "fas fa-star",
+    "variations": [
+      { "label": "Before", "edits": { "lighting": -7.0, "truncation": 0.5, "noise_strength": 1.0 } },
+      { "label": "Input Image", "edits": "input" },
+      { "label": "After Glow", "edits": { "lighting": 7.0, "truncation": 0.5, "noise_strength": 1.0 } }
+    ]
+  },
+  "dental_care": {
+    "id": "dental_care",
+    "name": "Smile Whitening Simulation",
+    "description": "Showcase the transformative power of dental products by simulating a brighter, healthier smile.",
+    "use_case": "For the Dental Care industry, this tool can show wider or whiter smiles as a direct result of using products like Colgate, Oral-B, or teeth whitening strips.",
+    "category": "Dental Care / Healthcare",
+    "icon": "fas fa-smile-beam",
+    "variations": [
+      { "label": "Before", "edits": { "smile": 7.0, "serious_mood": 6.5, "truncation": 0.5, "noise_strength": 1.0 } },
+      { "label": "Input Image", "edits": "input" },
+      { "label": "After Whitening", "edits": { "smile": -9.0, "truncation": 0.5, "noise_strength": 1.0 } }
+    ]
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "dramatic_tan": {
+    "id": "dramatic_tan",
+    "name": "Dramatic Tan & Shadow",
+    "description": "Creates a dramatic, tanned or dusky skin tone with shadowy lighting, ideal for intense or gritty scenes.",
+    "icon": "fas fa-moon",
+    "edits": {
+      "hair_color": -10.0,
+      "lighting": -7.0,
+      "truncation": 0.6
+    }
+  },
+  "golden_hour": {
+    "id": "golden_hour",
+    "name": "Golden Hour Romance",
+    "description": "Warm, soft, and bright lighting that evokes a feeling of romance and nostalgia.",
+    "icon": "fas fa-sun",
+    "edits": {
+      "lighting": 8.0,
+      "hair_color": -3.0,
+      "smile": -4.0,
+      "truncation": 0.55
+    }
+  },
+  "youth_flashback": {
+    "id": "youth_flashback",
+    "name": "Youth Flashback",
+    "description": "A younger, softer appearance with slightly brighter lighting to signify a memory or flashback.",
+    "icon": "fas fa-history",
+    "edits": {
+      "maturity": -10.0,
+      "lighting": 2.0,
+      "truncation": 0.5
+    }
+  },
+    "action_hero": {
+    "id": "action_hero",
+    "name": "Action Hero",
+    "description": "A determined, serious look with dramatic lighting, ready for an intense action sequence.",
+    "icon": "fas fa-bomb",
+    "edits": {
+      "serious_mood": 10.0,
+      "gender": 5.0,
+      "pose": -5.0,
+      "lighting": -4.0,
+      "truncation": 0.5
+    }
+  },
+  "found_footage_horror": {
+    "id": "found_footage_horror",
+    "name": "Found Footage Horror",
+    "description": "An unsettling look with harsh, direct lighting and wide-eyed fear, perfect for a jump scare moment.",
+    "icon": "fas fa-ghost",
+    "edits": {
+      "lighting": -6.0,
+      "eye_state": 10.0,
+      "expression": 10.0,
+      "smile": 4.0,
+      "truncation": 0.5
+    }
+  },
+  "comedic_exaggeration": {
+    "id": "comedic_exaggeration",
+    "name": "Comedic Exaggeration",
+    "description": "An over-the-top happy expression with a wide smile and bright, even lighting for a comedy scene.",
+    "icon": "fas fa-laugh-beam",
+    "edits": {
+      "smile": -9.0,
+      "truncation": 0.5
+    }
+  },
+  "masculine_appearance": {
+    "id": "masculine_appearance",
+    "name": "Masculine Appearance",
+    "description": "Applies strong masculine facial structures for a more traditionally male look.",
+    "icon": "fas fa-mars",
+    "edits": {
+      "gender": 10.0,
+      "truncation": 0.5
+    }
+  },
+  "feminine_appearance": {
+    "id": "feminine_appearance",
+    "name": "Feminine Appearance",
+    "description": "Applies delicate feminine facial structures for a more traditionally female look.",
+    "icon": "fas fa-venus",
+    "edits": {
+      "gender": -10.0,
+      "truncation": 0.5
+    }
+  },
+  "full_beard_style": {
+    "id": "full_beard_style",
+    "name": "Full Beard Style",
+    "description": "Instantly adds a prominent, full beard to create a rugged, weathered, or commanding character for a scene.",
+    "icon": "fas fa-user-circle",
+    "edits": {
+      "hair_length": 10.0,
+      "truncation": 0.5
+    }
+  }
+}

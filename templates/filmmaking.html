@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Making - Director's Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <h1>Face GAN Inversion Tool</h1>
+            </div>
+            <div class="navbar-links">
+                <a href="/" class="nav-link">Generate Face</a>
+                <a href="/marketing" class="nav-link">Marketing</a>
+                <a href="/filmmaking" class="nav-link active">Film Making</a>
+                <a href="/customize" class="nav-link">Customize Face</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <div class="app-header">
+            <h1 class="app-title">Director's Panel</h1>
+            <p class="app-subtitle">Apply instant cinematic moods to your actor's face for any scene.</p>
+        </div>
+
+        <div class="card">
+            <div class="results-section">
+                <div class="image-header">
+                    <h2 class="section-title" style="margin-bottom: 0; border: none; padding-bottom: 0;">Current Frame</h2>
+                    <button class="btn btn-secondary" id="resetSceneBtn" title="Reset to original synthetic face">
+                        <span class="btn-icon">
+                            <i class="fas fa-undo-alt" style="width: 16px; height: 16px;"></i> Reset
+                        </span>
+                    </button>
+                </div>
+                <div class="image-container" style="max-width: 400px; margin: auto; position: relative;">
+                    <img src="{{ synthetic_image }}" alt="Current Face" id="sceneImg">
+                    <div id="sceneLoadingIndicator" class="loading" style="display: none; position: absolute; top: 40%; left: 50%; transform: translateX(-50%); background-color: rgba(255,255,255,0.8); padding: 1rem; border-radius: 8px;">
+                        <div class="spinner"></div>
+                        <p style="margin-top: 0.5rem;">Rendering scene...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="section-title">Cinematic Presets</h2>
+            <div class="presets-grid">
+                {% for scene in scenes %}
+                <div class="preset-card">
+                    <div class="preset-icon"><i class="{{ scene.icon }}"></i></div>
+                    <h3>{{ scene.name }}</h3>
+                    <p>{{ scene.description }}</p>
+                    <button class="btn apply-scene-btn" data-edits='{{ scene.edits | tojson | e }}'>
+                        Apply Scene
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/filmmaking.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/nav_handler.js') }}"></script>
+</body>
+</html>

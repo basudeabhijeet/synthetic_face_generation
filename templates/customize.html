@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face GAN Inversion Tool - Customize</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <h1>Face GAN Inversion Tool</h1>
+            </div>
+            <div class="navbar-links">
+                <a href="/" class="nav-link">Generate Face</a>
+                <a href="/marketing" class="nav-link">Marketing</a>
+                <a href="/filmmaking" class="nav-link">Film Making</a>
+                <a href="/customize" class="nav-link active">Customize Face</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <div class="app-header">
+            <h1 class="app-title">Customize Synthetic Face</h1>
+            <p class="app-subtitle">Fine-tune facial attributes of your generated synthetic face</p>
+        </div>
+        
+        <div class="card">
+            <div class="results-section">
+                {% if not synthetic_image %}
+                <div class="no-image-message">
+                    <h2>No Generated Face Available</h2>
+                    <p>Please generate a synthetic face first before customizing attributes.</p>
+                    <a href="/" class="btn">
+                        Go to Generate Face
+                    </a>
+                </div>
+                {% else %}
+                <div class="image-comparison">
+                    <div class="image-card">
+                        <div class="image-header">
+                            <span>Original Image</span>
+                            <span class="pill">Input</span>
+                        </div>
+                        <div class="image-container">
+                            <img src="{{ original_image }}" alt="Original uploaded image" id="originalImg">
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <div class="image-header">
+                            <span>Synthetic Face</span>
+                            <button type="button" id="downloadBtn" class="btn btn-icon-only" title="Download Image">
+                                <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="image-container">
+                            <img src="{{ synthetic_image }}" alt="Generated synthetic face" id="syntheticImg">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div id="customizationPanel" style="display: {% if synthetic_image %}block{% else %}none{% endif %};">
+                    <h3 class="section-title">Basic Controls</h3>
+                    <form id="customizeForm">
+                        <div class="controls-row row-2-cols">
+                            <div class="control-group">
+                                <div class="control-label">
+                                    <span>Style Truncation</span>
+                                    <span class="control-value" id="truncationValue">{{ attributes.truncation|default('0.5') }}</span>
+                                </div>
+                                <input type="range" id="adjustTruncation" name="truncation" min="0.5" max="1.0" step="0.05" value="{{ attributes.truncation|default('0.5') }}">
+                                <p class="control-description">Lower values create more average-looking faces, higher values preserve more unique characteristics</p>
+                            </div>
+                            
+                            <div class="control-group">
+                                <div class="control-label">
+                                    <span>Noise Strength</span>
+                                    <span class="control-value" id="noiseValue">{{ attributes.noise_strength|default('1.0') }}</span>
+                                </div>
+                                <input type="range" id="adjustNoiseStrength" name="noise_strength" min="0" max="1" step="0.05" value="{{ attributes.noise_strength|default('1.0') }}">
+                                <p class="control-description">Higher values add more texture detail and variety to the generated face</p>
+                            </div>
+                        </div>
+
+                        <h3 class="section-title">Facial Attributes</h3>
+                        
+                        <div class="controls-row row-3-cols">
+                            <div class="control-group">
+                                <div class="control-label">
+                                    <span>Age Group</span>
+                                    <span class="control-value" id="ageValue">{{ (attributes.age or 0) - (attributes.pose or 0) }}</span>
+                                </div>
+                                <select id="adjustAge" name="age" class="form-select">
+                                    <option value="-10" {% if attributes.age == -10 %}selected{% endif %}>Youthful / Very Young</option>
+                                    <option value="-5" {% if attributes.age == -5 %}selected{% endif %}>Younger</option>
+                                    <option value="0" {% if attributes.age == 0 or attributes.age is not defined %}selected{% endif %}>Default</option>
+                                    <option value="5" {% if attributes.age == 5 or attributes.pose == -5 %}selected{% endif %}>Older</option>
+                                    <option value="10" {% if attributes.age == 10 or attributes.pose == -10 %}selected{% endif %}>Very Older / Elderly</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="control-label">
+                                    <span>Gender Appearance</span>
+                                    <span class="control-value" id="genderValue">{{ attributes.gender|default('0') }}</span>
+                                </div>
+                                <select id="adjustGender" name="gender" class="form-select">
+                                    <option value="-10" {% if attributes.gender == -10 %}selected{% endif %}>Strongly Feminine</option>
+                                    <option value="-5" {% if attributes.gender == -5 %}selected{% endif %}>Feminine</option>
+                                    <option value="0" {% if attributes.gender == 0 or attributes.gender is not defined %}selected{% endif %}>Default</option>
+                                    <option value="5" {% if attributes.gender == 5 %}selected{% endif %}>Masculine</option>
+                                    <option value="10" {% if attributes.gender == 10 %}selected{% endif %}>Strongly Masculine</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="control-label">
+                                    <span>Lighting Mood</span>
+                                    <span class="control-value" id="lightingValue">{{ attributes.lighting|default('0') }}</span>
+                                </div>
+                                <select id="adjustLighting" name="lighting" class="form-select">
+                                    <option value="-10" {% if attributes.lighting == -10 %}selected{% endif %}>Very Low Key / Dark</option>
+                                    <option value="-7.0" {% if attributes.lighting == -7.0 %}selected{% endif %}>Low Light</option>
+                                    <option value="0" {% if attributes.lighting == 0 or attributes.lighting is not defined %}selected{% endif %}>Default</option>
+                                    <option value="7.0" {% if attributes.lighting == 7.0 %}selected{% endif %}>Bright Light</option>
+                                    <option value="10" {% if attributes.lighting == 10 %}selected{% endif %}>High Key / Studio Light</option>
+                                </select>
+                            </div>
+                        </div>   
+
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Eye Openness</span>
+                                <span class="control-value" id="eyeStateValue">{{ attributes.eye_state|default('0') }}</span>
+                            </div>
+                            <select id="adjustEyeState" name="eye_state" class="form-select">
+                                <option value="-10" {% if attributes.eye_state == -10 %}selected{% endif %}>Fully Closed</option>
+                                <option value="-5" {% if attributes.eye_state == -5 %}selected{% endif %}>Squinting</option>
+                                <option value="0" {% if attributes.eye_state == 0 or attributes.eye_state is not defined %}selected{% endif %}>Normal / Default</option>
+                                <option value="5" {% if attributes.eye_state == 5 %}selected{% endif %}>Wide Open</option>
+                                <option value="10" {% if attributes.eye_state == 10 %}selected{% endif %}>Very Wide</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Facial Maturity</span>
+                                <span class="control-value" id="maturityValue">{{ attributes.maturity|default('0') }}</span>
+                            </div>
+                            <select id="adjustMaturity" name="maturity" class="form-select">
+                                <option value="-10" {% if attributes.maturity == -10 %}selected{% endif %}>Very Young</option>
+                                <option value="-6.5" {% if attributes.maturity == -6.5 %}selected{% endif %}>Youthful</option>
+                                <option value="0" {% if attributes.maturity == 0 or attributes.maturity is not defined %}selected{% endif %}>Default</option>
+                                <option value="5" {% if attributes.maturity == 5 %}selected{% endif %}>Aged</option>
+                                <option value="10" {% if attributes.maturity == 10 %}selected{% endif %}>Very Aged</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Eye Color</span>
+                                <span class="control-value" id="eyeColorValue">{{ attributes.eye_color|default('0') }}</span>
+                            </div>
+                            <select id="adjustEyeColor" name="eye_color" class="form-select">
+                                <option value="-10" {% if attributes.eye_color == -10 %}selected{% endif %}>Light Blue</option>
+                                <option value="-7.5" {% if attributes.eye_color == -7.5 %}selected{% endif %}>Light Green</option>
+                                <option value="0" {% if attributes.eye_color == 0 or attributes.eye_color is not defined %}selected{% endif %}>Default</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Serious Mood</span>
+                                <span class="control-value" id="seriousMoodValue">{{ attributes.serious_mood|default('0') }}</span>
+                            </div>
+                            <select id="adjustSeriousMood" name="serious_mood" class="form-select">
+                                <option value="0" {% if attributes.serious_mood == 0 or attributes.serious_mood is not defined %}selected{% endif %}>Neutral / Default</option>
+                                <option value="7.5" {% if attributes.serious_mood == 7.5 %}selected{% endif %}>Serious</option>
+                                <option value="10" {% if attributes.serious_mood == 10 %}selected{% endif %}>Extremely Serious</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Smile</span>
+                                <span class="control-value" id="smileValue">{{ attributes.smile|default('0') }}</span>
+                            </div>
+                            <input type="range" id="adjustSmile" name="smile" min="-10" max="10" step="0.5" value="{{ attributes.smile|default('0') }}">
+                            <p class="control-description">Control smile intensity (negative = smiling, positive = serious)</p>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="control-label">
+                                <span>Expression</span>
+                                <span class="control-value" id="expressionValue">{{ attributes.expression|default('0') }}</span>
+                            </div>
+                            <input type="range" id="adjustExpression" name="expression" min="-10" max="10" step="0.5" value="{{ attributes.expression|default('0') }}">
+                            <p class="control-description">Adjust facial expression (subtle changes)</p>
+                        </div>
+
+                        <h3 class="section-title">Hair and Skin Attributes</h3>
+
+                        <div class="controls-row row-2-cols">
+                            <div class="control-group">
+                                <div class="control-label">
+                                    <span>Hair & Skin color</span>
+                                    <span class="control-value" id="hairColorValue">{{ attributes.hair_color|default('0') }}</span>
+                                </div>
+                                <select id="adjustHairColor" name="hair_color" class="form-select">
+                                    <option value="-10" {% if attributes.hair_color == -10 %}selected{% endif %}>Dark / Dusky</option>
+                                    <option value="-5" {% if attributes.hair_color == -5 %}selected{% endif %}>Tan / Wheatish</option>
+                                    <option value="0" {% if attributes.hair_color == 0 or attributes.hair_color is not defined %}selected{% endif %}>Default</option>
+                                    <option value="5" {% if attributes.hair_color == 5 %}selected{% endif %}>Fair</option>
+                                    <option value="10" {% if attributes.hair_color == 10 %}selected{% endif %}>Very Pale</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <div class="control-label">
+                                    <span>Facial Hair</span>
+                                    <span class="control-value" id="hairLengthValue">{{ attributes.hair_length|default('0') }}</span>
+                                </div>
+                                <select id="adjustHairLength" name="hair_length" class="form-select">
+                                    <option value="-10" {% if attributes.hair_length == -10 %}selected{% endif %}>Clean Shaven</option>
+                                    <option value="-6.5" {% if attributes.hair_length == -6.5 %}selected{% endif %}>Light Stubble</option>
+                                    <option value="0" {% if attributes.hair_length == 0 or attributes.hair_length is not defined %}selected{% endif %}>Default</option>
+                                    <option value="6.5" {% if attributes.hair_length == 6.5 %}selected{% endif %}>Medium Beard</option>
+                                    <option value="10" {% if attributes.hair_length == 10 %}selected{% endif %}>Long Beard</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button type="button" id="resetBtn" class="btn btn-secondary">
+                                <span class="btn-icon">
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                    </svg>
+                                    Reset to Default
+                                </span>
+                            </button>
+                            <button type="button" id="applyChangesBtn" class="btn">
+                                <span class="btn-icon">
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                    </svg>
+                                    Apply Changes
+                                </span>
+                            </button>
+                        </div>
+                        
+                        <div class="loading" id="customizationLoadingIndicator">
+                            <p>Customizing face... This may take a few moments</p>
+                            <div class="spinner"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="static/js/customize.js"></script>
+    <script src="{{ url_for('static', filename='js/nav_handler.js') }}"></script>
+</body>
+</html>

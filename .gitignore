@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.log
+*.zip
+*.gz
+*.ini
+*.db
+*.sqlite3
+*.env
+venv/
+.DS_Store
+.idea/
+.ipynb_checkpoints/
