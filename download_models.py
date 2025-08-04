@@ -38,7 +38,7 @@ downloads = {
     "models/ganspace/smile_pca_direction.npy": "https://drive.google.com/file/d/1mjurY286umcwfw-7RNjcVWBV9EJg6_gO/view?usp=sharing",
     "models/hyperstyle/hyperstyle_ffhq.pt": "https://drive.google.com/file/d/1KkBHGd0Dk4a1Y4PgB06p1XsRBns4wU5L/view?usp=sharing",
     "models/stylegan2-ada-pytorch/ffhq.pkl": "https://drive.google.com/file/d/1EDOsYNpSiDeDlTq9LA_h1iwyD2-V1Eyk/view?usp=sharing",
-    "models/pretrained_models/faces_w_encoder.pt": "https://drive.google.com/file/d/1qsh6DpsSqAxrr6oWRaMd_Me2QFFypPHW/view?usp=sharing"
+    "pretrained_models/faces_w_encoder.pt": "https://drive.google.com/file/d/1qsh6DpsSqAxrr6oWRaMd_Me2QFFypPHW/view?usp=sharing"
 }
 
 # Download all files
